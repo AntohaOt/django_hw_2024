@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список связей</title>
+</head>
+<body>
+    <h1>Список связей</h1>
+    <ul>
+        {% for coursetostudent in coursestostudents %}
+            <li><a href="{% url 'coursetostudent' coursetostudent.id %}">{{ coursetostudent.course.title }} - {{ coursetostudent.student.first_name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

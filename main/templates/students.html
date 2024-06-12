@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список студентов</title>
+</head>
+<body>
+    <header>
+        <a href="/" class="home-button">Главная страница</a>
+        <div class="auth-buttons">
+            {% if user.is_authenticated %}
+                Привет, {{ user.username }}!
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a> | 
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="content">
+        <h1>Список студентов</h1>
+        <a href="{% url 'create_student' %}">Создать студента</a>
+        <ul>
+        {% for student in students %}
+            <li><a href="{% url 'student' student.id %}">{{ student.first_name }} {{ student.last_name }}</a></li>
+        {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

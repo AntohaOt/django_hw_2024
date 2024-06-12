@@ -1,0 +1,25 @@
+<head>
+    <body>
+        <header>
+            <a href="/" class="home-button">Главная страница</a> |
+            <a href="{% url 'courses' %}">Курсы</a> |
+            <a href="{% url 'course' course.id %}"> {{ course.title }}</a>
+            <div class="auth-buttons">
+                {% if user.is_authenticated %}
+                    Привет, {{ user.username }}!
+                    <a href="{% url 'logout' %}">Выйти</a>
+                {% else %}
+                    <a href="{% url 'login' %}">Войти</a> | 
+                    <a href="{% url 'register' %}">Регистрация</a>
+                {% endif %}
+            </div>
+        </header>
+    
+        <h1>Отзывы на курс {{ course.title }}</h1>
+        <ul>
+        {% for review in reviews %}
+            <li><a href="{% url 'review' review.id %}">{{ review.student.first_name }}: {{ review.grade }}</a></li>
+        {% endfor %}
+        </ul>
+    </body>
+    </html>

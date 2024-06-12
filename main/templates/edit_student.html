@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Редактирование студента</title>
+</head>
+<body>
+    <header>
+        <a href="/" class="home-button">Главная страница</a> |
+        <a href="{% url 'students' %}">Студенты</a>
+        <div class="auth-buttons">
+            {% if user.is_authenticated %}
+                Привет, {{ user.username }}!
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a> | 
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="content">
+        <h1>Редактирование студента</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="first_name">Имя:</label><br>
+            <input type="text" id="first_name" name="first_name" value="{{ student.first_name }}" required maxlength="30"><br>
+            <label for="last_name">Фамилия:</label><br>
+            <input type="text" id="last_name" name="last_name" value="{{ student.last_name }}" required maxlength="30"><br>
+            <label for="date_of_receipt">Дата поступления на курс:</label><br>
+            <input type="date" id="date_of_receipt" name="date_of_receipt" value="{{ student.date_of_receipt }}" required max="{{ today }}"><br>
+            <button type="submit">Сохранить студента</button>
+        </form>
+        {% if error %}
+        <p style="color: red;">{{ error }}</p>
+        {% endif %}
+    </div>
+</body>
+</html>

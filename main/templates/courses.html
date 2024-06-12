@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Список курсов</title>
+</head>
+<body>
+    <header>
+        <a href="/" class="home-button">Главная страница</a>
+        <div class="auth-buttons">
+            {% if user.is_authenticated %}
+                Привет, {{ user.username }}!
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a> | 
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="content">
+        <h1>Список курсов</h1>
+            <a href="{% url 'create_course' %}" class="btn btn-primary">Создать курс</a>
+        <ul>
+            {% for course in courses %}
+                <li> Название: 
+                    <a href="{% url 'course' course.id %}">{{ course.title }}</a>
+                    <p>Описание: {{ course.description }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>

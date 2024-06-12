@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Оставить отзыв</title>
+</head>
+<body>
+    <header>
+        <a href="/" class="home-button">Главная страница</a> |
+        <a href="{% url 'courses' %}">Курсы</a> |
+        <a href="{% url 'course' course.id %}">{{ course.title }}</a>
+        <div class="auth-buttons">
+            {% if user.is_authenticated %}
+                Привет, {{ user.username }}!
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a> | 
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </header>
+    <div class="content"></div>
+    <h1>Оставить отзыв для курса "{{ course.title }}"</h1>
+    <form action="{% url 'create_review' course.id %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Оставить отзыв</button>
+    </form>
+</body>
+</html>
