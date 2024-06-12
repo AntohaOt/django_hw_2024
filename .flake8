@@ -56,7 +56,9 @@ extend-ignore=
         WPS319,
 
         S106,
-        WPS204
+        WPS204,
+        I001,
+        I003,
 
 per-file-ignores=
         test_*.py:
