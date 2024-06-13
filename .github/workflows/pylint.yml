@@ -30,5 +30,6 @@ jobs:
         python -m pip install --upgrade pip
         pip install pytest==6.2.5
         pip install numpy
+        pip install django
     - name: Pytest
       run: python3 manage.py test
