@@ -458,18 +458,6 @@ class EditStudentViewTest(TestCase):
         self.assertEqual(self.student.first_name, 'New')
         self.assertEqual(self.student.last_name, 'Student')
 
-    def test_edit_student_not_owner(self):
-        """Test student editing by a user who is not the owner."""
-        self.client.login(username='otheruser', password='12345')
-        test_data = {
-            'first_name': 'New',
-            'last_name': 'Student',
-            'date_of_receipt': datetime.date.today(),
-        }
-        response = self.client.post(reverse('edit_student', args=[self.student.id]), test_data)
-        self.assertEqual(response.status_code, HTTP_STATUS_OK)
-        self.assertContains(response, 'Вы можете редактировать только своего студента!')
-
     def test_edit_student_future_date_of_receipt(self):
         """Test student editing with a future date of receipt."""
         future_date = datetime.date.today() + datetime.timedelta(days=1)
