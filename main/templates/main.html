@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Главная страница</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0e0e0;
+        }
+        header {
+            background-color: #607d8b;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-buttons a, .auth-buttons a {
+            color: white;
+            text-decoration: none;
+        }
+        .nav-buttons a:hover, .auth-buttons a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #455a64;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        p {
+            color: #455a64;
+            line-height: 1.6;
+        }
+        a {
+            color: #009688;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            color: white;
+            background-color: #009688;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #00796b;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-buttons">
+            <a href="/" class="home-button">Главная страница</a>
+        </div>
+        <div class="auth-buttons">
+            {% if user.is_authenticated %}
+                Привет, {{ user.username }}! |
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a> | 
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="content">
+        <h1>Добро пожаловать на главную страницу!</h1>
+
+        <h2><a href="{% url 'students' %}" class="button">Студенты</a></h2>
+        <ul>
+        {% for student in students %}
+            <li><a href="{% url 'student' student.id %}">{{ student.first_name }} {{ student.last_name }}</a></li>
+        {% endfor %}
+        </ul>
+
+        <h2><a href="{% url 'courses' %}" class="button">Курсы</a></h2>
+        <ul>
+        {% for course in courses %}
+            <li><a href="{% url 'course' course.id %}">{{ course.title }}</a></li>
+        {% endfor %}
+        </ul>
+
+    </div>
+    {% if error %}
+    <p style="color: red;">{{ error }}</p>
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ student.first_name }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #e0e0e0;
+        }
+        header {
+            background-color: #607d8b;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .nav-buttons a, .auth-buttons a {
+            color: white;
+            text-decoration: none;
+        }
+        .nav-buttons a:hover, .auth-buttons a:hover {
+            text-decoration: underline;
+        }
+        .content {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #455a64;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        p {
+            color: #455a64;
+            line-height: 1.6;
+        }
+        a {
+            color: #009688;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .student-actions a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #009688;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .student-actions a:hover {
+            background-color: #00796b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="nav-buttons">
+            <a href="/" class="home-button">Главная страница</a> |
+            <a href="{% url 'students' %}">Студенты</a>
+        </div>
+        <div class="auth-buttons">
+            {% if user.is_authenticated %}
+                Привет, {{ user.username }}! |
+                <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'login' %}">Войти</a> | 
+                <a href="{% url 'register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="content">
+        <h1>{{ student.first_name }} {{ student.last_name }}</h1>
+        <p>Дата поступления на курс: {{ student.date_of_receipt }}</p>
+        <p>ID студента: {{ student.id }}</p>
+        <a href="{% url 'student_courses' student.id %}">Проходимые курсы</a>
+        <div class="student-actions">
+            {% if student.user == request.user or request.user.is_staff %}
+            <a href="{% url 'edit_student' student.id %}">Редактировать</a>
+            <a href="{% url 'delete_student' student.id %}">Удалить</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
